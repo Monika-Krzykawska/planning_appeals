@@ -43,8 +43,8 @@ require 'csv'
 url = 'http://planning.cornwall.gov.uk/online-applications/search.do?action=advanced&searchType=Appeal' #link to the advanced search page on the local authority website
 url_beginning = "http://planning.cornwall.gov.uk" #the first bit of the url (ending with "gov.uk")
 council = "Cornwall" #specify the council name
-startDate = "01/01/2017" #specify decision date start
-endDate = "31/03/2017" #specify decision date end
+startDate = "01/01/2016" #specify decision date start
+endDate = "31/12/2016" #specify decision date end
 
 # this is to instantiate a new mechanize object
 agent = Mechanize.new
