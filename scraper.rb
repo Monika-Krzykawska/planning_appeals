@@ -96,4 +96,88 @@ links_array.map! do |item|
 	item = "#{url_beginning}#{item}"
 end
 
-pp links_array
+# pp links_array
+
+# this is to define empty arrays where we will store all the details
+# on individual applications
+reference_array = []
+address_array = []
+nature_array = []
+type_array = []
+outcome_array = []
+decdate_array = []
+
+# the following .each method is to scrap the data on the aplications'
+# reference number, address, nature
+# appeal type, decision, decision date
+# Then, to store the scraped data in the relevant arrays
+
+links_array.each do |appeal|
+
+# this is to instantiate a new mechanize object
+    agent = Mechanize.new
+
+# this is to fetch the webpage and parse HTML using Nokogiri
+    sub_page = ScraperWiki::scrape(appeal)
+    parse_sub_page = Nokogiri::HTML(sub_page)
+	
+	# *****
+# this is to parse the data, remove spaces and push the data
+# to the relevant arrays. The code also removes comas from
+# the nature descriptions. Please check and amend the td
+# positions in brackets: []
+
+	reference = parse_sub_page.css('#appealDetails').css('td')[0].text
+	reference_tidied = reference.strip
+	reference_array.push(reference_tidied)
+
+	address = parse_sub_page.css('#appealDetails').css('td')[2].text
+	address_tidied = address.strip
+	address_array.push(address_tidied)
+
+	nature = parse_sub_page.css('#appealDetails').css('td')[3].text
+	nature_tidied = nature.strip
+	nature_array.push(nature_tidied)
+	nature_array.each do |nature|
+		nature.gsub(",","")
+	end
+
+	type = parse_sub_page.css('#appealDetails').css('td')[5].text
+	type_tidied = type.strip
+	type_array.push(type_tidied)
+
+	outcome = parse_sub_page.css('#appealDetails').css('td')[6].text
+	outcome_tidied = outcome.strip
+	outcome_array.push(outcome_tidied)
+
+	decdate = parse_sub_page.css('#appealDetails').css('td')[11].text
+	decdate_tidied = decdate.strip
+	decdate_array.push(decdate_tidied)
+
+end
+
+# this is to add one more array: council name
+counting = links_array.count
+council_array = Array.new(counting,council)
+
+# *****
+# this is to transpose the data in the arrays in order to
+# change the layout of data
+
+table = [reference_array, address_array, nature_array, type_array, outcome_array, decdate_array, links_array, council_array].transpose
+pp table
+
+# this is the loop to save the data in the SQlite table
+
+# i = 0
+
+# while i < counting
+
+# data = { "reference"=>reference_array[i], "altreference" =>altreference_array[i], "received"=>received_array[i], "validated"=>validated_array[i], "address"=>address_array[i], "proposal"=>proposal_array[i], "outcome"=>outcome_array[i], "decided"=>decided_array[i], "links"=>links_array[i], "council"=>council_array[i] }
+# unique_keys = [ "reference" ]
+# ScraperWiki::save_sqlite(unique_keys, data, table_name = "basildon",verbose=2)
+
+# i = i + 1
+# end
+
+
