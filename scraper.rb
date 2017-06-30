@@ -40,10 +40,10 @@ require 'mechanize'
 require 'csv'
 
 # SPECIFY YOUR VARIBLES HERE:
-url = 'https://publicaccess.westoxon.gov.uk/online-applications/search.do?action=advanced&searchType=Appeal' #link to the advanced search page on the local authority website
-url_beginning = "https://publicaccess.westoxon.gov.uk" #the first bit of the url (ending with "gov.uk")
-council = "West_Oxfordshire" #specify the council name
-startDate = "01/01/2017" #specify decision date start
+url = 'http://planning.broads-authority.gov.uk/online-applications/search.do?action=advanced&searchType=Appeal' #link to the advanced search page on the local authority website
+url_beginning = "http://planning.broads-authority.gov.uk" #the first bit of the url (ending with "gov.uk")
+council = "Broads_Authority" #specify the council name
+startDate = "01/07/2014" #specify decision date start
 endDate = "31/03/2017" #specify decision date end
 
 # this is to instantiate a new mechanize object
